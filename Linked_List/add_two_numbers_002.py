@@ -25,27 +25,32 @@ class Solution:
                     cur.next = ListNode(0)
 
             cur = cur.next
+        
+        if l1:
+            l = l1
+        else:
+            l = l2
 
-        while l1:
-            cur.val += l1.val
-            l1 = l1.next
+        while l:
+            cur.val += l.val
+            l = l.next
             if cur.val >= 10:
                 cur.val %= 10
                 cur.next = ListNode(1)
             else:
-                if l1:
+                if l:
                     cur.next = ListNode(0)
             cur = cur.next
 
-        while l2:
-            cur.val += l2.val
-            l2 = l2.next
-            if cur.val >= 10:
-                cur.val %= 10
-                cur.next = ListNode(1)
-            else:
-                if l2:
-                    cur.next = ListNode(0)	
-            cur = cur.next
+        # while l2:
+        #     cur.val += l2.val
+        #     l2 = l2.next
+        #     if cur.val >= 10:
+        #         cur.val %= 10
+        #         cur.next = ListNode(1)
+        #     else:
+        #         if l2:
+        #             cur.next = ListNode(0)	
+        #     cur = cur.next
 
         return l_result

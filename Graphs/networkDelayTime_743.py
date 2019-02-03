@@ -1,5 +1,8 @@
 class Solution:
     def networkDelayTime(self, times, N, K):
+        """
+        My first ever code on solving Graphs
+        """
         graph_tree = {} # {node:(neigboors, time)}
         for edge in times:
             if edge[0] in graph_tree:
@@ -47,6 +50,8 @@ class Solution:
         else:
             return -1
 
+    def leetCode_solution(self, times, N, K):
+        
 
 
 # times = [[2,1,1],[2,3,1],[3,4,1]]

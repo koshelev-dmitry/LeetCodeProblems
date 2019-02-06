@@ -19,6 +19,10 @@ January:
 February:
 1: 62, 169, 403
 2: 743, 973
+5: 223, 295
 
 Redooo:
 437, 15, 169
+
+To solve:
+Basic Calculator (224)

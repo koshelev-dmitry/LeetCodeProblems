@@ -1,30 +1,46 @@
 class Solution:
     def getSkyline(self, buildings):
-        priority, ans = [], [] 
-        i, side = 0, 0
-        while i < len(buildings) or priority:
-            # checks to see if nothing is on the heap (just starting), then checks bounds, 
-            # then checks if next building has a left-side that is <= the right-side of the 
-            # top of the heap. 
-            if not priority or i < len(buildings) and buildings[i][0] <= -priority[0][1]:
-                side = buildings[i][0]
-                # checks to see if there are multiple buildings with same start-point
-                while i < len(buildings) and buildings[i][0] == side:
-                    # pushes height, right-side tuple to heap (which will sort by height)
-                    heapq.heappush(priority, (-buildings[i][2], -buildings[i][1]))
-                    i += 1
-            else:
-                side = -priority[0][1]
-                while priority and -priority[0][1] <= side:
-                    heapq.heappop(priority)
-            height = 0
-            # checks heap for height, if nothing on heap, you are at the end, height = 0
-            if priority:
-                height = -priority[0][0]
-            # checks if height is the same as the current height
-            if not ans or height != ans[-1][1]:
-                ans.append([side, height])
-        return ans
+        """
+        :type buildings: List[List[int]]
+        :rtype: List[List[int]]
+        """
+        buildings = sorted(buildings, key=lambda x: x[2], reverse=True)
+        building_groups = [] # [ [Li,Ri], [Li,Ri], right_H ]
+        result = []
+
+        for building in buildings:
+            group_in = []
+            new_group_left = building[1] # set default as right of building
+            new_group_right = building[1]
+            new_group_right_H = building[2]
+            for group in building_groups:
+                if (building[1] < group[0]) or (building[0] > group[1]):  # out of group
+                    pass
+                else:
+                    new_group_left = min(group[0], new_group_left)
+                    if new_group_right <= group[1]:
+                        new_group_right = group[1]
+                        new_group_right_H = group[2]
+                    group_in.append(group)
+                    if building[0] <= group[1] < building[1] and group[2] > building[2] :
+                        result.append([group[1], building[2]]) # add cross right
+
+            if not group_in: # create group
+                building_groups.append([building[0], building[1], building[2]])
+                result.append([building[0], building[2]])
+            else: # delete old and add new
+                if building[0] < new_group_left:
+                    result.append([building[0], building[2]])  # add left corner
+                    new_group_left = building[0]
+                building_groups = [x for x in building_groups if x not in group_in] # del old
+                building_groups.append([new_group_left, new_group_right, new_group_right_H])
+
+        # add group_right_base
+        for group in building_groups:
+            result.append([group[1], 0])
+
+        # sort
+        return sorted(result)
         
     # def _getSkyline(self, buildings):
         # My first solution of the problem

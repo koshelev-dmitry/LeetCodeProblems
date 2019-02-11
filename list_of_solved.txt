@@ -20,9 +20,12 @@ February:
 1: 62, 169, 403
 2: 743, 973
 5: 223, 295
+7: 227, 300, 60
+11: 121
 
 Redooo:
-437, 15, 169
+437, 15, 169, 300
 
-To solve:
-Basic Calculator (224)
+
+
+calculators, all types + 282
